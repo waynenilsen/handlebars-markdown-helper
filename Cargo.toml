@@ -1,0 +1,8 @@
+[package]
+authors = ["Wayne Nilsen <waynenilsen@gmail.com>"]
+name = "handlebars-markdown-helper"
+version = "0.1.0"
+
+[dependencies]
+handlebars = "0.11.2"
+pulldown-cmark = "0.0.3"
