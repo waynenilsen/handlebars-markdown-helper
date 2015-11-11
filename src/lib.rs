@@ -1,8 +1,15 @@
 extern crate handlebars; 
-use handlebars::helpers::{HelperDef};
-use handlebars::registry::{Registry};
-use handlebars::context::{Context, JsonRender};
-use handlebars::render::{Renderable, RenderContext, RenderError, render_error, Helper};
+use handlebars::{
+	HelperDef,
+	Context,
+	Handlebars,
+	JsonRender,
+	Renderable,
+	RenderContext,
+	RenderError,
+	Helper
+	};
+
 extern crate pulldown_cmark;
 
 use self::pulldown_cmark::Parser;
@@ -12,7 +19,11 @@ use self::pulldown_cmark::html;
 #[derive(Clone, Copy)]
 pub struct MarkdownHelper;
 
-
+pub fn render_error(desc: &'static str) -> RenderError {
+    RenderError {
+        desc: desc
+    }
+}
 
 pub fn render_html(text: String) -> String {
     let mut s = String::with_capacity(text.len() * 3 / 2);
@@ -23,7 +34,7 @@ pub fn render_html(text: String) -> String {
 
 
 impl HelperDef for MarkdownHelper {
-    fn call(&self, c: &Context, h: &Helper, _: &Registry, rc: &mut RenderContext) -> Result<(), RenderError> {
+    fn call(&self, c: &Context, h: &Helper, _ : &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
         let markdown_text_var = try!(h.param(0).ok_or_else(|| render_error("Param not found for helper \"markdown\"")));
         let markdown_text = c.navigate(rc.get_path(), &markdown_text_var).render(); 
         let html_string = render_html(markdown_text);
@@ -36,8 +47,7 @@ pub static MARKDOWN_HELPER: MarkdownHelper = MarkdownHelper;
 
 #[cfg(test)]
 mod test {
-    use template::{Template};
-    use registry::{Registry};
+    use handlebars::{Template, Handlebars};
 
     use std::collections::BTreeMap;
 
@@ -45,7 +55,7 @@ mod test {
     fn test_markdown() {
         let t0 = Template::compile("{{markdown x}}".to_string()).ok().unwrap();
 
-        let mut handlebars = Registry::new();
+        let mut handlebars = Handlebars::new();
         handlebars.register_template("t0", t0);
 
         let mut m :BTreeMap<String, String> = BTreeMap::new();
