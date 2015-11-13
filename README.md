@@ -1,4 +1,4 @@
-![master status](https://travis-ci.org/waynenilsen/handlebars-markdown-helper.svg?branch=master)
+![master status](https://travis-ci.org/waynenilsen/handlebars-markdown-helper.svg?branch=master) ![](http://meritbadge.herokuapp.com/handlebars-markdown-helper)](https://crates.io/crates/handlebars-markdown-helper)
 
 # Handlebars Markdown Helper
 
