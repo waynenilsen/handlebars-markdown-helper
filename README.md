@@ -22,4 +22,4 @@ assert_eq!(r0.ok().unwrap(), "<h1>wow</h1>\n<h2>second wow</h2>\n".to_string());
 
 ---
 
-![deps](Cargo.svg)
+![deps](Cargo.jpg)
