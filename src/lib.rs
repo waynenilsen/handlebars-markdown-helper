@@ -15,9 +15,9 @@ use self::pulldown_cmark::html;
 
 use std::io::prelude::*;
 
-pub fn render_error(desc: &'static str) -> RenderError {
+pub fn render_error<'a>(desc: &'static str) -> RenderError {
     RenderError {
-        desc: desc
+        desc: desc.into()
     }
 }
 
@@ -29,7 +29,7 @@ pub fn render_html(text: String) -> String {
 }
 
 pub fn markdown_helper(c: &Context, h: &Helper, _ : &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
-	let markdown_text_var = try!(h.param(0).ok_or_else(|| render_error("Param not found for helper \"markdown\"")));
+	let markdown_text_var = try!(h.param(0).ok_or_else(|| render_error("Param not found for helper \"markdown\"".into())));
 	let markdown_text = c.navigate(rc.get_path(), &markdown_text_var).render(); 
 	let html_string = render_html(markdown_text);
 	try!(rc.writer.write(html_string.into_bytes().as_ref()));
