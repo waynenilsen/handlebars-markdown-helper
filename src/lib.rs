@@ -1,6 +1,5 @@
 extern crate handlebars; 
 use handlebars::{
-	HelperDef,
 	Context,
 	Handlebars,
 	JsonRender,
@@ -11,13 +10,10 @@ use handlebars::{
 	};
 
 extern crate pulldown_cmark;
-
 use self::pulldown_cmark::Parser;
 use self::pulldown_cmark::html;
 
-
-#[derive(Clone, Copy)]
-pub struct MarkdownHelper;
+use std::io::prelude::*;
 
 pub fn render_error(desc: &'static str) -> RenderError {
     RenderError {
@@ -32,23 +28,17 @@ pub fn render_html(text: String) -> String {
     s
 }
 
-
-impl HelperDef for MarkdownHelper {
-    fn call(&self, c: &Context, h: &Helper, _ : &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
-        let markdown_text_var = try!(h.param(0).ok_or_else(|| render_error("Param not found for helper \"markdown\"")));
-        let markdown_text = c.navigate(rc.get_path(), &markdown_text_var).render(); 
-        let html_string = render_html(markdown_text);
-        try!(rc.writer.write(html_string.into_bytes().as_ref()));
-        Ok(())
-    }
+pub fn markdown_helper(c: &Context, h: &Helper, _ : &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
+	let markdown_text_var = try!(h.param(0).ok_or_else(|| render_error("Param not found for helper \"markdown\"")));
+	let markdown_text = c.navigate(rc.get_path(), &markdown_text_var).render(); 
+	let html_string = render_html(markdown_text);
+	try!(rc.writer.write(html_string.into_bytes().as_ref()));
+	Ok(())
 }
-
-pub static MARKDOWN_HELPER: MarkdownHelper = MarkdownHelper;
 
 #[cfg(test)]
 mod test {
     use handlebars::{Template, Handlebars};
-
     use std::collections::BTreeMap;
 
     #[test]
@@ -56,6 +46,7 @@ mod test {
         let t0 = Template::compile("{{markdown x}}".to_string()).ok().unwrap();
 
         let mut handlebars = Handlebars::new();
+        handlebars.register_helper("markdown", Box::new(::markdown_helper));
         handlebars.register_template("t0", t0);
 
         let mut m :BTreeMap<String, String> = BTreeMap::new();
@@ -64,8 +55,4 @@ mod test {
         let r0 = handlebars.render("t0", &m);
         assert_eq!(r0.ok().unwrap(), "<h1>wow</h1>\n<h2>second wow</h2>\n".to_string());
     }
-}
-
-#[test]
-fn it_works() {
 }
