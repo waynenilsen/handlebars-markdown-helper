@@ -6,11 +6,14 @@ The [handlebars crate](https://crates.io/crates/handlebars) provides easy templa
 
 ## Example 
 
-```
+```rust
+extern crate handlebars_markdown_helper;
+use handlebars_markdown_helper; 
+
 let t0 = Template::compile("{{markdown x}}".to_string()).ok().unwrap();
 
 let mut handlebars = Handlebars::new();
-handlebars.register_helper("markdown", Box::new(::markdown_helper));
+handlebars.register_helper("markdown", Box::new(handlebars_markdown_helper::markdown_helper));
 handlebars.register_template("t0", t0);
 
 let mut m :BTreeMap<String, String> = BTreeMap::new();

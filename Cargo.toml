@@ -1,10 +1,12 @@
 [package]
 authors = ["Wayne Nilsen <waynenilsen@gmail.com>"]
 name = "handlebars-markdown-helper"
-version = "0.1.1"
+version = "0.1.2"
 description = "A helper for handlebars that adds markdown renedring"
 license = "MIT"
 homepage = "https://github.com/waynenilsen/handlebars-markdown-helper"
+readme = "README.md"
+keywords = ["handlebars", "templating", "template", "markdown", "web"]
 
 [dependencies]
 handlebars = "0.11.3"
