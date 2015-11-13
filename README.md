@@ -2,7 +2,7 @@
 
 # Handlebars Markdown Helper
 
-The [handlebars crate](https://crates.io/crates/handlebars) provides easy templating for anything file type. This crate provides a helper for rendering a variable containing markdown into HTML within a temlpate. 
+The [handlebars crate](https://crates.io/crates/handlebars) provides easy templating for any file type. This crate provides a helper for rendering a variable containing markdown into HTML within a temlpate. 
 
 ## Example 
 
