@@ -3,7 +3,6 @@ use handlebars::{
 	Context,
 	Handlebars,
 	JsonRender,
-	Renderable,
 	RenderContext,
 	RenderError,
 	Helper
@@ -13,14 +12,6 @@ extern crate pulldown_cmark;
 use self::pulldown_cmark::Parser;
 use self::pulldown_cmark::html;
 
-use std::io::prelude::*;
-
-pub fn render_error<'a>(desc: &'static str) -> RenderError {
-    RenderError {
-        desc: desc.into()
-    }
-}
-
 pub fn render_html(text: String) -> String {
     let mut s = String::with_capacity(text.len() * 3 / 2);
     let p = Parser::new(&*text);
@@ -28,9 +19,9 @@ pub fn render_html(text: String) -> String {
     s
 }
 
-pub fn markdown_helper(c: &Context, h: &Helper, _ : &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
-	let markdown_text_var = try!(h.param(0).ok_or_else(|| render_error("Param not found for helper \"markdown\"".into())));
-	let markdown_text = c.navigate(rc.get_path(), &markdown_text_var).render(); 
+pub fn markdown_helper(_: &Context, h: &Helper, _ : &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
+	let markdown_text_var = try!(h.param(0).ok_or_else(|| RenderError::new("Param not found for helper \"markdown\"")));
+	let markdown_text = markdown_text_var.value().render(); 
 	let html_string = render_html(markdown_text);
 	try!(rc.writer.write(html_string.into_bytes().as_ref()));
 	Ok(())
