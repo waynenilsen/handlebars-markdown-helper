@@ -1,7 +1,7 @@
 [package]
 authors = ["Wayne Nilsen <waynenilsen@gmail.com>"]
 name = "handlebars-markdown-helper"
-version = "0.2.0"
+version = "0.3.0"
 description = "A helper for handlebars that adds markdown rendering"
 license = "MIT"
 homepage = "https://github.com/waynenilsen/handlebars-markdown-helper"
@@ -10,4 +10,4 @@ keywords = ["handlebars", "templating", "template", "markdown", "web"]
 
 [dependencies]
 handlebars = "^0.20.0"
-pulldown-cmark = "0.0.3"
+pulldown-cmark = "0.0.8"
