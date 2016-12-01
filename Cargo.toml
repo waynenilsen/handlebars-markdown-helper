@@ -9,5 +9,5 @@ readme = "README.md"
 keywords = ["handlebars", "templating", "template", "markdown", "web"]
 
 [dependencies]
-handlebars = "^0.20.0"
+handlebars = "^0.22.0"
 pulldown-cmark = "0.0.8"
