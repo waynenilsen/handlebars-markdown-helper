@@ -2,19 +2,17 @@
 
 # Handlebars Markdown Helper
 
-The [handlebars crate](https://crates.io/crates/handlebars) provides easy templating for any file type. This crate provides a helper for rendering a variable containing markdown into HTML within a temlpate. 
+The [handlebars crate](https://crates.io/crates/handlebars) provides easy templating for any file type. This crate provides a helper for rendering a variable containing markdown into HTML within a temlpate.
 
-## Example 
+## Example
 
 ```rust
 extern crate handlebars_markdown_helper;
-use handlebars_markdown_helper; 
-
-let t0 = Template::compile("{{markdown x}}".to_string()).ok().unwrap();
+use handlebars_markdown_helper;
 
 let mut handlebars = Handlebars::new();
 handlebars.register_helper("markdown", Box::new(handlebars_markdown_helper::markdown_helper));
-handlebars.register_template("t0", t0);
+handlebars.register_template("t0", "{{markdown x}}");
 
 let mut m :BTreeMap<String, String> = BTreeMap::new();
 m.insert("x".into(), "# wow\n\n## second wow".into());
