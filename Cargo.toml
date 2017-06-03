@@ -10,4 +10,4 @@ keywords = ["handlebars", "templating", "template", "markdown", "web"]
 
 [dependencies]
 handlebars = "^0.26.0"
-pulldown-cmark = "0.0.8"
+pulldown-cmark = "0.0.14"
