@@ -1,7 +1,7 @@
 [package]
 authors = ["Wayne Nilsen <waynenilsen@gmail.com>"]
 name = "handlebars-markdown-helper"
-version = "0.6.0"
+version = "0.6.1"
 description = "A helper for handlebars that adds markdown rendering"
 license = "MIT"
 homepage = "https://github.com/waynenilsen/handlebars-markdown-helper"
