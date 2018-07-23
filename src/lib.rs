@@ -1,5 +1,5 @@
 extern crate handlebars;
-use handlebars::{Handlebars, JsonRender, RenderContext, RenderError, Helper};
+use handlebars::{Handlebars, JsonRender, RenderContext, RenderError, Helper, Context, Output};
 
 extern crate pulldown_cmark;
 use self::pulldown_cmark::Parser;
@@ -14,14 +14,16 @@ pub fn render_html(text: String) -> String {
 
 pub fn markdown_helper(h: &Helper,
                        _: &Handlebars,
-                       rc: &mut RenderContext)
+                       _: &Context,
+                       _: &mut RenderContext,
+                       out: &mut Output)
                        -> Result<(), RenderError> {
     let markdown_text_var =
         try!(h.param(0)
                  .ok_or_else(|| RenderError::new("Param not found for helper \"markdown\"")));
     let markdown_text = markdown_text_var.value().render();
     let html_string = render_html(markdown_text);
-    try!(rc.writer.write(html_string.into_bytes().as_ref()));
+    try!(out.write(&html_string));
     Ok(())
 }
 
